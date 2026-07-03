@@ -86,4 +86,32 @@ describe('MetricsDashboard', () => {
 
     vi.useRealTimers();
   });
+
+  it('shows system status bar with "All Clear" when no anomalies', () => {
+    render(<MetricsDashboard />);
+    const statusBar = screen.getByTestId('system-status-bar');
+    expect(statusBar).toBeInTheDocument();
+    expect(screen.getByText(/all clear/i)).toBeInTheDocument();
+  });
+
+  it('system status bar turns red with offending metric name when anomaly detected', async () => {
+    vi.useFakeTimers();
+    render(<MetricsDashboard />);
+
+    const spikeButton = screen.getByRole('button', { name: /inject.*spike/i });
+    act(() => {
+      spikeButton.click();
+    });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(2000);
+    });
+
+    // Status bar should show anomaly text, not "All Clear"
+    expect(screen.queryByText(/all clear/i)).not.toBeInTheDocument();
+    // Should show the metric name that's anomalous (any of the three metrics)
+    expect(screen.getByText(/anomaly detected/i)).toBeInTheDocument();
+
+    vi.useRealTimers();
+  });
 });
