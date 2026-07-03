@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #161514;
+    color: #E8E5E0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    /* Subtle radial gradient for depth — like Linear/Vercel */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(199, 69, 46, 0.06), transparent);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  /* Custom scrollbar — refined dark theme */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333029;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3D3A33;
+  }
+
+  /* Focus visibility for accessibility */
+  *:focus-visible {
+    outline: 2px solid rgba(199, 69, 46, 0.6);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  /* Base card surface — shared between metric cards and feed panel */
+  .card-surface {
+    @apply rounded-xl bg-surface-elevated border border-surface-border transition-all duration-300;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+  }
+
+  .card-surface:hover {
+    @apply border-surface-border-strong;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  /* Anomaly card variant — subtle brand glow on hover */
+  .card-anomaly {
+    @apply border-brand/40;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 0 0 1px rgba(199,69,46,0.1);
+  }
+
+  .card-anomaly:hover {
+    @apply border-brand/60;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 20px rgba(199,69,46,0.08);
+  }
+}
